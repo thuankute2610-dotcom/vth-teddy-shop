@@ -29,8 +29,14 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI;
 
+if (!MONGODB_URI) {
+  console.error('❌ LỖI: Biến môi trường MONGODB_URI chưa được cấu hình!');
+  console.error('⚠️ Vui lòng thêm MONGODB_URI vào biến môi trường của Render.');
+  process.exit(1);
+}
+
 mongoose
-  .connect(MONGODB_URI)
+  .connect(MONGODB_URI, { serverSelectionTimeoutMS: 30000 })
   .then(() => {
     console.log('✅ Đã kết nối MongoDB Atlas thành công!');
     app.listen(PORT, () => {
