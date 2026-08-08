@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: vth-teddy-shop
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+    autoDeploy: true
+    healthCheckPath: /api/products
+
